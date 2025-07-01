@@ -1,0 +1,19 @@
+password_manager/
+├── run.py                Main file you run to use the app
+├── password_manager.py   Core logic to add/retrieve passwords
+├── crypto_utils.py       Handles encryption & decryption
+├── key_generator.py      One-time key generator script
+├── vault.json            Stores your encrypted passwords 
+├── secret.key            Encryption key file 
+└── venv/                 Virtual environment
+To use the password manager it will be divided into some phases
+
+1. run.py is the file or we can say the main file which will we run to use the app, it is our entry point it shows the menu to the use who wants to store their passwords or manage them
+
+2. password.manager.py -> it contains the core logic to add and retireve the passwords of different users we will be encrypting the passwords for security so that user's privacy remains constant
+
+3. crypto_utils.py it handles the encryption and decryption for the passwords
+
+4. key_generator.py it is the one time key generator script
+
+5. All the passwords are getting saved in the vault where we can see the details but not the password as they are encrypted
