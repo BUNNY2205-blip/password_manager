@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: password-manager
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "streamlit run run.py"
+    plan: free
