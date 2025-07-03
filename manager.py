@@ -1,7 +1,7 @@
 import json
-import os #for checking if file exists
-from crypto import encrypt_passw, decrypt_passw #custom encryption function
-import pyperclip  #for copying passwords directly to the clipboards
+import os
+import streamlit as st  
+from crypto import encrypt_passw, decrypt_passw
 
 DATA_FILE = "vault.json"
 
@@ -9,12 +9,12 @@ DATA_FILE = "vault.json"
 def load_data():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, "r") as f:
-            return json.load(f)  #gives the data present in the dictionary and if not it will return an empty dictionary
+            return json.load(f)
     return {}
 
 # Save password data to file
 def save_data(data):
-    with open(DATA_FILE, "w") as f: #saves the data into the json file 
+    with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
 # Add a new password (encrypt before saving)
@@ -25,17 +25,16 @@ def add_password(site, username, password):
         "password": encrypt_passw(password)
     }
     save_data(data)
-    print(f" Password saved for {site}")
+    st.success(f"Password saved for {site}")
 
 # Get password for a site (decrypt before displaying)
 def get_password(site):
     data = load_data()
     if site in data:
         decrypted = decrypt_passw(data[site]["password"])
-        print(f"\n Site: {site}")
-        print(f" Username: {data[site]['username']}")
-        print(f" Password: {decrypted}")
-        pyperclip.copy(decrypted)
-        print(" Password copied to clipboard!")
+        st.subheader(f" Credentials for {site}")
+        st.write(f"**Username:** {data[site]['username']}")
+        st.code(decrypted, language="text")
+        st.info("Password shown above. You can copy it manually.")
     else:
-        print(" No password found for that site.")
+        st.error("No password found for that site.")
